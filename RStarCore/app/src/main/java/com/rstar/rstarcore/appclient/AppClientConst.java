@@ -15,6 +15,13 @@
  */
 package com.rstar.rstarcore.appclient;
 
-public interface AppClientConst {
-    String KEY_APP_NAME = "key_app_name";
+import com.rstar.rstarcore.RStarCoreConst;
+
+interface AppClientConst {
+    String KEY_APP_NAME = RStarCoreConst.KEY_APP_NAME;
+    String KEY_APP_SIGNATURE = RStarCoreConst.KEY_APP_SIGNATURE;
+
+    enum SignatureType {
+        MD5, SHA1, SH256
+    }
 }

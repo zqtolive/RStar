@@ -13,7 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore;
+package com.rstar.rstarcore.client;
 
-public interface IRStarService {
+class ClientHistory {
+    private long mConnectTime;
+    private long mDisconnectTime;
+
+    ClientHistory(long connectTime){
+        mConnectTime = connectTime;
+    }
 }

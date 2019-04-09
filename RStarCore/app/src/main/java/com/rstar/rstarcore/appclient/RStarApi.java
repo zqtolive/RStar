@@ -38,26 +38,23 @@ public class RStarApi {
     public final void connect() {
         Intent intent = new Intent(ACTION_CORE_SERVICE);
         intent.putExtra(AppClientConst.KEY_APP_NAME, mContext.getPackageName());
-        boolean success = false;
-        try {
-            success = mContext.bindService(intent, new ServiceConnection() {
-                @Override
-                public void onServiceConnected(ComponentName name, IBinder service) {
-                    mApi = IRStarClientApi.Stub.asInterface(service);
-                }
+        intent.putExtra(AppClientConst.KEY_APP_SIGNATURE, AppSignatureHelper
+                .getAppSignature(mContext, AppClientConst.SignatureType.SHA1));
+        mContext.bindService(intent, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                mApi = IRStarClientApi.Stub.asInterface(service);
+            }
 
-                @Override
-                public void onServiceDisconnected(ComponentName name) {
-                    mApi = null;
-                }
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                mApi = null;
+            }
 
-                @Override
-                public void onBindingDied(ComponentName name) {
+            @Override
+            public void onBindingDied(ComponentName name) {
 
-                }
-            }, Context.BIND_AUTO_CREATE);
-        } catch (SecurityException e) {
-
-        }
+            }
+        }, Context.BIND_AUTO_CREATE);
     }
 }

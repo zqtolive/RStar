@@ -13,7 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore;
+package com.rstar.rstarcore.client;
 
-public interface IRStarService {
+import com.rstar.rstarcore.RStarCoreConst;
+
+import java.util.ArrayList;
+
+class ClientInfo {
+    private String mClientName;
+    private RStarCoreConst.AppAuthority mAuthority;
+    private ArrayList<ClientHistory> mHistory = new ArrayList<>();
+
+    ClientInfo(String clientName, RStarCoreConst.AppAuthority authority) {
+        mClientName = clientName;
+        mAuthority = authority;
+        mHistory.add(new ClientHistory(System.currentTimeMillis()));
+    }
 }

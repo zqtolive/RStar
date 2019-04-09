@@ -15,5 +15,11 @@
  */
 package com.rstar.rstarcore;
 
-public interface IRStarService {
+public interface RStarCoreConst {
+    String KEY_APP_NAME = "key_app_name";
+    String KEY_APP_SIGNATURE = "key_app_signature";
+
+    enum AppAuthority {
+        normal, system, root
+    }
 }
