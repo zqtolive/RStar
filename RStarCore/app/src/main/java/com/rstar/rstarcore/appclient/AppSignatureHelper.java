@@ -23,7 +23,26 @@ import android.content.pm.Signature;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * @Package: com.rstar.rstarcore.appclient
+ * @ClassName: AppSignatureHelper
+ * @Description: Get the app's signature with the class.
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/10 12:25
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/10 12:25
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
 class AppSignatureHelper {
+    /**
+     * Get the app's signature.
+     *
+     * @param context Application's context, get signature with it.
+     * @param type    Define the type of signature.
+     * @return signature's string.
+     */
     static String getAppSignature(Context context, AppClientConst.SignatureType type) {
         String signature = null;
         Signature[] signatures = getSignatures(context, context.getPackageName());

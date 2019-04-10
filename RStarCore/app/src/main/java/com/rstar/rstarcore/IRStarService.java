@@ -15,5 +15,37 @@
  */
 package com.rstar.rstarcore;
 
+import android.os.Bundle;
+
+/**
+ * @Package: com.rstar.rstarcore
+ * @ClassName: IRStarService
+ * @Description:
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/10 12:56
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/10 12:56
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
 public interface IRStarService {
+    /**
+     * Get special service with service type.
+     *
+     * @param serviceType Special service's type.
+     * @return Special service.
+     */
+    BaseService getService(String serviceType);
+
+    /**
+     * Execute special function with special service.
+     *
+     * @param serviceType Special service's type.
+     * @param method      Special method's name.
+     * @param param       Input parameters.
+     * @param out         Output result.
+     * @return Execute result.
+     */
+    int execute(String serviceType, String method, Bundle param, Bundle out);
 }

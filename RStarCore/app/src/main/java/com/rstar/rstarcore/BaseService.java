@@ -13,19 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.appclient;
+package com.rstar.rstarcore;
+
+import android.content.Context;
+import android.os.Bundle;
 
 /**
- * @Package: com.rstar.rstarcore.appclient
- * @ClassName: IServiceConnectListener
- * @Description: Define the interface to observer the service connecting state.
+ * @Package: com.rstar.rstarcore
+ * @ClassName: BaseService
+ * @Description:
  * @Author: 庆涛
  * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/10 12:34
+ * @CreateDate: 2019/4/10 16:25
  * @UpdateUser:
- * @UpdateDate: 2019/4/10 12:34
+ * @UpdateDate: 2019/4/10 16:25
  * @UpdateRemark:
  * @Version: 1.0
  */
-public interface IServiceConnectListener {
+public abstract class BaseService {
+    protected IRStarService mService;
+    protected Context mContext;
+
+    public BaseService(IRStarService service, Context context) {
+        mService = service;
+        mContext = context;
+    }
+
+    public int execute(String method, Bundle param, Bundle out) {
+        throw new UnsupportedOperationException("execute don't support now!");
+    }
 }

@@ -13,19 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.appclient;
+package com.rstar.rstarcore.client;
+
+import com.rstar.rstarcore.aidl.IRStarClientApi;
 
 /**
- * @Package: com.rstar.rstarcore.appclient
- * @ClassName: IServiceConnectListener
- * @Description: Define the interface to observer the service connecting state.
+ * @Package: com.rstar.rstarcore.client
+ * @ClassName: ClientService
+ * @Description: It provides service for client app.
  * @Author: 庆涛
  * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/10 12:34
+ * @CreateDate: 2019/4/10 16:09
  * @UpdateUser:
- * @UpdateDate: 2019/4/10 12:34
+ * @UpdateDate: 2019/4/10 16:09
  * @UpdateRemark:
  * @Version: 1.0
  */
-public interface IServiceConnectListener {
+public class ClientService extends IRStarClientApi.Stub {
+    private ClientInfo mInfo;
+
+    ClientService(ClientInfo clientInfo) {
+        mInfo = clientInfo;
+    }
 }

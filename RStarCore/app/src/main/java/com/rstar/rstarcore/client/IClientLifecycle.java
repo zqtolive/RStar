@@ -15,5 +15,17 @@
  */
 package com.rstar.rstarcore.client;
 
+/**
+ * @Package: com.rstar.rstarcore.client
+ * @ClassName: IClientLifecycle
+ * @Description: monitor the client's running state.
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/10 12:53
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/10 12:53
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
 interface IClientLifecycle {
 }

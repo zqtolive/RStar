@@ -22,11 +22,24 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.rstar.rstarcore.client.ClientManager;
+import com.rstar.rstarcore.remote.RemoteService;
 
-public class CoreService extends Service implements IRStarService {
+/**
+ * @Package: com.rstar.rstarcore
+ * @ClassName: CoreService
+ * @Description:
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/10 12:56
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/10 12:56
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
+public class CoreService extends Service {
     private static final String TAG = CoreService.class.getSimpleName();
 
-    private ClientManager mClientManager;
+    private ServiceManager mServiceManager;
 
     @Override
     public void onCreate() {
@@ -34,14 +47,33 @@ public class CoreService extends Service implements IRStarService {
         init(getApplicationContext());
     }
 
-    private void init(Context context){
-
+    private void init(Context context) {
+        mServiceManager = new ServiceManager(null, context);
+        mServiceManager.createSystemService();
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        IBinder binder;
+        switch (intent.getAction()) {
+            case RStarCoreConst.ACTION_CORE_SERVICE:
+                ((RemoteService) mServiceManager.getService(RStarCoreConst
+                        .SERVICE_TYPE_REMOTE_SERVICE)).oauth(intent
+                                .getStringExtra(RStarCoreConst.KEY_APP_NAME)
+                        , intent.getStringExtra(RStarCoreConst.KEY_APP_SIGNATURE)
+                        , intent.getStringExtra(RStarCoreConst.KEY_APP_SECRETKEY));
+                binder = ((ClientManager) mServiceManager.getService(RStarCoreConst
+                        .SERVICE_TYPE_CLIENT_MANAGER)).registerClient(intent
+                                .getStringExtra(RStarCoreConst.KEY_APP_NAME)
+                        , intent.getStringExtra(RStarCoreConst.KEY_APP_SIGNATURE)
+                        , intent.getStringExtra(RStarCoreConst.KEY_APP_SECRETKEY));
+                break;
+            default:
+                binder = null;
+                break;
+        }
+        return binder;
     }
 
     @Override

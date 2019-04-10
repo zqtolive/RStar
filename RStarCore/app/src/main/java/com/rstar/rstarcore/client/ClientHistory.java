@@ -15,11 +15,29 @@
  */
 package com.rstar.rstarcore.client;
 
+/**
+ * @Package: com.rstar.rstarcore.client
+ * @ClassName: ClientHistory
+ * @Description: Record the client state change.
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/10 12:46
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/10 12:46
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
 class ClientHistory {
-    private long mConnectTime;
-    private long mDisconnectTime;
+    private long mTime;
+    private ClientState mState;
+    private OperationType mOperationType;
+    private String mDetails;
 
-    ClientHistory(long connectTime){
-        mConnectTime = connectTime;
+    ClientHistory(long time) {
+        mTime = time;
+    }
+
+    String dump() {
+        return null;
     }
 }

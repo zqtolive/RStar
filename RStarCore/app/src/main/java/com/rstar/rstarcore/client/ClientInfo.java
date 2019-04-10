@@ -19,14 +19,33 @@ import com.rstar.rstarcore.RStarCoreConst;
 
 import java.util.ArrayList;
 
+/**
+ * @Package: com.rstar.rstarcore.client
+ * @ClassName: ClientInfo
+ * @Description: The client's details.
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/10 12:48
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/10 12:48
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
 class ClientInfo {
     private String mClientName;
+    private String mSignature;
+    private String mSecretKey;
     private RStarCoreConst.AppAuthority mAuthority;
     private ArrayList<ClientHistory> mHistory = new ArrayList<>();
 
-    ClientInfo(String clientName, RStarCoreConst.AppAuthority authority) {
+    ClientInfo(String clientName, String clientSignature, String secretKey) {
         mClientName = clientName;
-        mAuthority = authority;
+        mSignature = clientSignature;
+        mSecretKey = secretKey;
         mHistory.add(new ClientHistory(System.currentTimeMillis()));
+    }
+
+    String dump() {
+        return null;
     }
 }

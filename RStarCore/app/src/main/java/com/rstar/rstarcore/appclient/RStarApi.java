@@ -24,9 +24,20 @@ import android.support.annotation.NonNull;
 
 import com.rstar.rstarcore.aidl.IRStarClientApi;
 
+/**
+ * @Package: com.rstar.rstarcore.appclient
+ * @ClassName: RStarApi
+ * @Description: Connect to the service and provide api for client app.
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/10 12:37
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/10 12:37
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
 public class RStarApi {
     private static final String TAG = RStarApi.class.getSimpleName();
-    private static final String ACTION_CORE_SERVICE = "com.rstar.rstarcore.coreservice";
 
     private Context mContext;
     private IRStarClientApi mApi;
@@ -35,11 +46,15 @@ public class RStarApi {
         mContext = context.getApplicationContext();
     }
 
+    /**
+     * Connect to RStar core service.
+     */
     public final void connect() {
-        Intent intent = new Intent(ACTION_CORE_SERVICE);
+        Intent intent = new Intent(AppClientConst.ACTION_CORE_SERVICE);
         intent.putExtra(AppClientConst.KEY_APP_NAME, mContext.getPackageName());
         intent.putExtra(AppClientConst.KEY_APP_SIGNATURE, AppSignatureHelper
                 .getAppSignature(mContext, AppClientConst.SignatureType.SHA1));
+        intent.putExtra(AppClientConst.KEY_APP_SECRETKEY, mContext.getPackageName());
         mContext.bindService(intent, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {

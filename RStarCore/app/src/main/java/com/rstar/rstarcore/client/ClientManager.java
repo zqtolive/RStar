@@ -17,19 +17,51 @@ package com.rstar.rstarcore.client;
 
 import android.content.Context;
 
+import com.rstar.rstarcore.BaseService;
 import com.rstar.rstarcore.IRStarService;
 
 import java.util.HashMap;
 
-public class ClientManager {
+/**
+ * @Package: com.rstar.rstarcore.client
+ * @ClassName: ClientManager
+ * @Description: Manage the clients which has connected with the server.
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/10 12:50
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/10 12:50
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
+public class ClientManager extends BaseService {
     private static final String TAG = ClientManager.class.getSimpleName();
-    private HashMap<String, IClient> mClientMap = new HashMap<>();
-
-    private Context mContext;
-    private IRStarService mService;
+    private HashMap<String, ClientService> mClientMap = new HashMap<>();
 
     public ClientManager(IRStarService service, Context context) {
-        mService = service;
-        mContext = context;
+        super(service, context);
+    }
+
+    /**
+     * While client connect to the server, need register to ClientManager and obtain a handle of
+     * IRStarClientApi.Stub to communicate with server.
+     *
+     * @param clientName      The package name of client
+     * @param clientSignature The client's signature
+     * @param secretKey       The client's secret key
+     * @return The handle of IRStarClientApi.Stub
+     */
+    public ClientService registerClient(String clientName, String clientSignature, String secretKey) {
+        ClientService clientService = null;
+        StringBuilder stringBuilder = new StringBuilder(clientName);
+        stringBuilder.append(ClientConst.DIV_CLIENT_KEY).append(clientSignature);
+        String key = stringBuilder.toString();
+        clientService = mClientMap.get(key);
+        if (clientService == null) {
+            ClientInfo client = new ClientInfo(clientName, clientSignature, secretKey);
+            clientService = new ClientService(client);
+            mClientMap.put(key, clientService);
+        }
+        return clientService;
     }
 }

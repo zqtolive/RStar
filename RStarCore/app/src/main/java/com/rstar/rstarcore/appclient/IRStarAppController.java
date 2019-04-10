@@ -17,15 +17,21 @@ package com.rstar.rstarcore.appclient;
 
 /**
  * @Package: com.rstar.rstarcore.appclient
- * @ClassName: IServiceConnectListener
- * @Description: Define the interface to observer the service connecting state.
+ * @ClassName: IRStarAppController
+ * @Description: Define the interface to control the app client.
  * @Author: 庆涛
  * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/10 12:34
+ * @CreateDate: 2019/4/10 12:30
  * @UpdateUser:
- * @UpdateDate: 2019/4/10 12:34
+ * @UpdateDate: 2019/4/10 12:30
  * @UpdateRemark:
  * @Version: 1.0
  */
-public interface IServiceConnectListener {
+public interface IRStarAppController {
+    /**
+     * Get the app's secret key.
+     *
+     * @return App's secret key.
+     */
+    String getAppSecretKey();
 }

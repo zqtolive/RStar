@@ -13,9 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.service;
+package com.rstar.rstarcore.client;
 
-import com.rstar.rstarcore.aidl.IRStarClientApi;
-
-public class ClientService extends IRStarClientApi.Stub {
+/**
+ * @Package: com.rstar.rstarcore.client
+ * @ClassName: ClientConst
+ * @Description: Define the const for client module.
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/10 15:31
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/10 15:31
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
+interface ClientConst {
+    char DIV_CLIENT_KEY = '@';
 }

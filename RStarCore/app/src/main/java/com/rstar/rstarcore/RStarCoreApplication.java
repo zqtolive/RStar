@@ -17,6 +17,18 @@ package com.rstar.rstarcore;
 
 import android.app.Application;
 
+/**
+ * @Package: com.rstar.rstarcore
+ * @ClassName: RStarCoreApplication
+ * @Description:
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/10 12:57
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/10 12:57
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
 public class RStarCoreApplication extends Application {
     @Override
     public void onCreate() {

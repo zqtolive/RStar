@@ -17,10 +17,39 @@ package com.rstar.rstarcore.appclient;
 
 import com.rstar.rstarcore.RStarCoreConst;
 
+/**
+ * @Package: com.rstar.rstarcore.appclient
+ * @ClassName: AppClientConst
+ * @Description: Define the const for RStar App.
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/10 12:02
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/10 12:02
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
 interface AppClientConst {
+    /**
+     * Define the key of app package name in bundle.
+     */
     String KEY_APP_NAME = RStarCoreConst.KEY_APP_NAME;
+    /**
+     * Define the key of app signature in bundle.
+     */
     String KEY_APP_SIGNATURE = RStarCoreConst.KEY_APP_SIGNATURE;
+    /**
+     * Define the app secret key in bundle.
+     */
+    String KEY_APP_SECRETKEY = RStarCoreConst.KEY_APP_SECRETKEY;
+    /**
+     * It's the action connect with RStarCore service.
+     */
+    String ACTION_CORE_SERVICE = RStarCoreConst.ACTION_CORE_SERVICE;
 
+    /**
+     * Define the signature type. Default is SHA1.
+     */
     enum SignatureType {
         MD5, SHA1, SH256
     }
