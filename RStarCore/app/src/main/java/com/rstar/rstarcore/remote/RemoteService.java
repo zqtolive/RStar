@@ -19,7 +19,11 @@ import android.content.Context;
 
 import com.rstar.rstarcore.BaseService;
 import com.rstar.rstarcore.IRStarService;
+import com.rstar.rstarcore.R;
 import com.rstar.rstarcore.remote.oauth.OAuthService;
+
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 
 /**
  * @Package: com.rstar.rstarcore.remote
@@ -41,6 +45,21 @@ public class RemoteService extends BaseService {
     public RemoteService(IRStarService service, Context context) {
         super(service, context);
         mOAuthService = new OAuthService(context);
+    }
+
+    @Override
+    protected void onDestroy() {
+
+    }
+
+    @Override
+    protected String description() {
+        return mContext.getString(R.string.description_remote_service);
+    }
+
+    @Override
+    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+
     }
 
     /**

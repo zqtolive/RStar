@@ -18,6 +18,8 @@ package com.rstar.rstarcore;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.rstar.rstarcore.debug.Dumpable;
+
 /**
  * @Package: com.rstar.rstarcore
  * @ClassName: BaseService
@@ -30,7 +32,7 @@ import android.os.Bundle;
  * @UpdateRemark:
  * @Version: 1.0
  */
-public abstract class BaseService {
+public abstract class BaseService implements Dumpable {
     protected IRStarService mService;
     protected Context mContext;
 
@@ -39,7 +41,39 @@ public abstract class BaseService {
         mContext = context;
     }
 
+    /**
+     * Execute special operation in service. Now, we don't realize the method.
+     * UnsupportedOperationException will be thrown.
+     *
+     * @param method Specail operation.
+     * @param param  Input parameters.
+     * @param out    Output result.
+     * @return Execute result.
+     */
     public int execute(String method, Bundle param, Bundle out) {
         throw new UnsupportedOperationException("execute don't support now!");
     }
+
+    /**
+     * While RStarCore destroy, all service should destroy, then call the function
+     * to destroy service.
+     */
+    public final void destroy() {
+        onDestroy();
+        mContext = null;
+        mService = null;
+    }
+
+    /**
+     * While service destroy, should notify the service to reset state and variable.
+     */
+    protected abstract void onDestroy();
+
+    /**
+     * Get the service function's description. Display it while dump system information.
+     * Make developer know which message can output.
+     *
+     * @return
+     */
+    protected abstract String description();
 }

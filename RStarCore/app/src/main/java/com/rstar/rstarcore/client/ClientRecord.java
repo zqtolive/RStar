@@ -15,33 +15,42 @@
  */
 package com.rstar.rstarcore.client;
 
-import com.rstar.rstarcore.aidl.IRStarClientApi;
+import com.rstar.rstarcore.debug.Dumpable;
+
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 
 /**
  * @Package: com.rstar.rstarcore.client
- * @ClassName: ClientService
- * @Description: It provides service for client app.
+ * @ClassName: ClientRecord
+ * @Description: Record the client state change.
  * @Author: 庆涛
  * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/10 16:09
+ * @CreateDate: 2019/4/10 12:46
  * @UpdateUser:
- * @UpdateDate: 2019/4/10 16:09
+ * @UpdateDate: 2019/4/10 12:46
  * @UpdateRemark:
  * @Version: 1.0
  */
-public class ClientService extends IRStarClientApi.Stub {
-    private ClientInfo mInfo;
+class ClientRecord implements Dumpable {
+    private long mTime;
+    private ClientState mState;
+    private OperationType mOperationType;
+    private String mDetails;
 
-    ClientService(ClientInfo clientInfo) {
-        mInfo = clientInfo;
+    ClientRecord(long time) {
+        mTime = time;
     }
 
-    ClientInfo getInfo() {
-        return mInfo;
-    }
-
-    void onDestroy() {
-        mInfo.onDestroy();
-        mInfo = null;
+    @Override
+    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+        pw.print("    time = ");
+        pw.print(mTime);
+        pw.print(", state = ");
+        pw.print(mState);
+        pw.print(", operationType = ");
+        pw.print(mOperationType);
+        pw.print(", details = ");
+        pw.println(mDetails);
     }
 }

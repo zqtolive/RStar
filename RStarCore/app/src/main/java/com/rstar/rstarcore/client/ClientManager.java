@@ -19,7 +19,10 @@ import android.content.Context;
 
 import com.rstar.rstarcore.BaseService;
 import com.rstar.rstarcore.IRStarService;
+import com.rstar.rstarcore.R;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 /**
@@ -40,6 +43,28 @@ public class ClientManager extends BaseService {
 
     public ClientManager(IRStarService service, Context context) {
         super(service, context);
+    }
+
+    @Override
+    protected void onDestroy() {
+        for (ClientService client : mClientMap.values()) {
+            client.onDestroy();
+        }
+        mClientMap.clear();
+        mClientMap = null;
+    }
+
+    @Override
+    protected String description() {
+        return mContext.getString(R.string.description_client_manager);
+    }
+
+    @Override
+    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+        pw.println("Client's count" + mClientMap.size() + ",All clients info:");
+        for (ClientService client : mClientMap.values()) {
+            client.getInfo().dump(fd, pw, args);
+        }
     }
 
     /**

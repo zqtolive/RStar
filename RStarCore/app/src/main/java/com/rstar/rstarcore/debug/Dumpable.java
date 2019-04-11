@@ -13,31 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.client;
+package com.rstar.rstarcore.debug;
+
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 
 /**
- * @Package: com.rstar.rstarcore.client
- * @ClassName: ClientHistory
- * @Description: Record the client state change.
+ * @Package: com.rstar.rstarcore
+ * @ClassName: Dumpable
+ * @Description: Dump system info interface.
  * @Author: 庆涛
  * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/10 12:46
+ * @CreateDate: 2019/4/11 7:44
  * @UpdateUser:
- * @UpdateDate: 2019/4/10 12:46
+ * @UpdateDate: 2019/4/11 7:44
  * @UpdateRemark:
  * @Version: 1.0
  */
-class ClientHistory {
-    private long mTime;
-    private ClientState mState;
-    private OperationType mOperationType;
-    private String mDetails;
-
-    ClientHistory(long time) {
-        mTime = time;
-    }
-
-    String dump() {
-        return null;
-    }
+public interface Dumpable {
+    /**
+     * Output some information into special file. The information could help us to debug.
+     *
+     * @param fd   Output file's descriptior.
+     * @param pw   Use it to output information.
+     * @param args Use the args to judge what should be output.
+     */
+    void dump(FileDescriptor fd, PrintWriter pw, String[] args);
 }

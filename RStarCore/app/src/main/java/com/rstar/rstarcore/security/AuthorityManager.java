@@ -1,9 +1,13 @@
-package com.rstar.rstarcore.authority;
+package com.rstar.rstarcore.security;
 
 import android.content.Context;
 
 import com.rstar.rstarcore.BaseService;
 import com.rstar.rstarcore.IRStarService;
+import com.rstar.rstarcore.R;
+
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 
 /**
  * @Package: com.rstar.rstarcore.authority
@@ -20,5 +24,20 @@ import com.rstar.rstarcore.IRStarService;
 public class AuthorityManager extends BaseService {
     public AuthorityManager(IRStarService service, Context context) {
         super(service, context);
+    }
+
+    @Override
+    protected void onDestroy() {
+
+    }
+
+    @Override
+    protected String description() {
+        return mContext.getString(R.string.description_authority_manager);
+    }
+
+    @Override
+    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+
     }
 }

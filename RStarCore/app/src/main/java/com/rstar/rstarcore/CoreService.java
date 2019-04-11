@@ -80,4 +80,10 @@ public class CoreService extends Service {
     public boolean onUnbind(Intent intent) {
         return super.onUnbind(intent);
     }
+
+    @Override
+    public void onDestroy() {
+        mServiceManager.destroy();
+        super.onDestroy();
+    }
 }

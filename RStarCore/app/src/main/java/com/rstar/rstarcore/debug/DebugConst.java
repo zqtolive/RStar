@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.client;
+package com.rstar.rstarcore.debug;
 
 /**
- * @Package: com.rstar.rstarcore.client
- * @ClassName: OperationType
- * @Description: Define the operating type which cause client's state change.
+ * @Package: com.rstar.rstarcore.debug
+ * @ClassName: DebugConst
+ * @Description:
  * @Author: 庆涛
  * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/10 12:43
+ * @CreateDate: 2019/4/11 16:22
  * @UpdateUser:
- * @UpdateDate: 2019/4/10 12:43
+ * @UpdateDate: 2019/4/11 16:22
  * @UpdateRemark:
  * @Version: 1.0
  */
-enum OperationType {
-
+interface DebugConst {
+    int PORT = 8686;
 }

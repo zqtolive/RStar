@@ -15,8 +15,11 @@
  */
 package com.rstar.rstarcore.client;
 
+import com.rstar.rstarcore.debug.Dumpable;
 import com.rstar.rstarcore.RStarCoreConst;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -31,21 +34,33 @@ import java.util.ArrayList;
  * @UpdateRemark:
  * @Version: 1.0
  */
-class ClientInfo {
+class ClientInfo implements Dumpable {
     private String mClientName;
     private String mSignature;
     private String mSecretKey;
     private RStarCoreConst.AppAuthority mAuthority;
-    private ArrayList<ClientHistory> mHistory = new ArrayList<>();
+    private ArrayList<ClientRecord> mHistory = new ArrayList<>();
 
     ClientInfo(String clientName, String clientSignature, String secretKey) {
         mClientName = clientName;
         mSignature = clientSignature;
         mSecretKey = secretKey;
-        mHistory.add(new ClientHistory(System.currentTimeMillis()));
+        mHistory.add(new ClientRecord(System.currentTimeMillis()));
     }
 
-    String dump() {
-        return null;
+    @Override
+    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+        pw.print("  name = ");
+        pw.println(mClientName);
+        for (ClientRecord record : mHistory) {
+            record.dump(fd, pw, args);
+        }
+    }
+
+    void onDestroy() {
+        mClientName = null;
+        mSignature = null;
+        mSecretKey = null;
+        mHistory.clear();
     }
 }
