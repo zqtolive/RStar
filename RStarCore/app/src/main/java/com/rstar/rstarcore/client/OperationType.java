@@ -28,5 +28,27 @@ package com.rstar.rstarcore.client;
  * @Version: 1.0
  */
 enum OperationType {
+    bindService("The app %s bind CoreService."),
+    unbindService("The app %s unbind CoreService."),
+    died("The app %s has died."),
+    start("The app %s start."),
+    pauseBySystem("The app %s paused by %s."),
+    resumeBySystem("The app %s resumed by %s"),
+    pauseByApp("The app %s paused by another app %s stared."),
+    resumeByApp("The app %s resumed by another app %s stopped.");
 
+    private String mReason;
+
+    OperationType(String reason) {
+        mReason = reason;
+    }
+
+    /**
+     * Get changing reason string's pattern.
+     *
+     * @return Reason pattern.
+     */
+    String reason() {
+        return mReason;
+    }
 }

@@ -13,25 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.appclient;
+package com.rstar.rstarcore;
 
-/**
- * @Package: com.rstar.rstarcore.appclient
- * @ClassName: IRStarAppController
- * @Description: Define the interface to control the app client.
- * @Author: 庆涛
- * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/10 12:30
- * @UpdateUser:
- * @UpdateDate: 2019/4/10 12:30
- * @UpdateRemark:
- * @Version: 1.0
- */
-public interface IRStarAppController {
-    /**
-     * Get the app's secret key.
-     *
-     * @return App's secret key.
-     */
-    String getAppSecretKey();
+import com.rstar.rstarcore.IRStarClientController;
+
+// Declare any non-default types here with import statements
+
+interface IRStarClientApi {
+    void registerAppController(IRStarClientController controller);
 }

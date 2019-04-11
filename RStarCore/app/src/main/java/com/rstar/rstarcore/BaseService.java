@@ -68,12 +68,4 @@ public abstract class BaseService implements Dumpable {
      * While service destroy, should notify the service to reset state and variable.
      */
     protected abstract void onDestroy();
-
-    /**
-     * Get the service function's description. Display it while dump system information.
-     * Make developer know which message can output.
-     *
-     * @return
-     */
-    protected abstract String description();
 }

@@ -22,7 +22,6 @@ import com.rstar.rstarcore.IRStarService;
 import com.rstar.rstarcore.R;
 import com.rstar.rstarcore.remote.oauth.OAuthService;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
 /**
@@ -53,12 +52,12 @@ public class RemoteService extends BaseService {
     }
 
     @Override
-    protected String description() {
+    public String dumpDescription() {
         return mContext.getString(R.string.description_remote_service);
     }
 
     @Override
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+    public void dump(PrintWriter pw, String[] args) {
 
     }
 

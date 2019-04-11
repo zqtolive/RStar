@@ -17,16 +17,33 @@ package com.rstar.rstarcore.client;
 
 /**
  * @Package: com.rstar.rstarcore.client
- * @ClassName: ClientState
- * @Description: Client's running state.
+ * @ClassName: IAppStatusChange
+ * @Description: While top app change will call the interface to notify.
  * @Author: 庆涛
  * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/10 12:41
+ * @CreateDate: 2019/4/14 11:40
  * @UpdateUser:
- * @UpdateDate: 2019/4/10 12:41
+ * @UpdateDate: 2019/4/14 11:40
  * @UpdateRemark:
  * @Version: 1.0
  */
-enum ClientState {
-    dead, active, paused
+interface IAppStatusChange {
+    /**
+     * While the app gain the focus, onResume will be called.
+     * @param stoppedApp
+     */
+    void onResume(String stoppedApp);
+
+    /**
+     * While the app lost the focus, onPause will be called.
+     * @param resumeApp
+     */
+    void onPause(String resumeApp);
+
+    /**
+     * Get app's package name.
+     *
+     * @return App's package name.
+     */
+    String getAppName();
 }

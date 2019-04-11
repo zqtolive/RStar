@@ -78,6 +78,16 @@ public class CoreService extends Service {
 
     @Override
     public boolean onUnbind(Intent intent) {
+        switch (intent.getAction()) {
+            case RStarCoreConst.ACTION_CORE_SERVICE:
+                ((ClientManager) mServiceManager.getService(RStarCoreConst
+                        .SERVICE_TYPE_CLIENT_MANAGER)).clientUnbind(intent
+                                .getStringExtra(RStarCoreConst.KEY_APP_NAME)
+                        , intent.getStringExtra(RStarCoreConst.KEY_APP_SIGNATURE));
+                break;
+            default:
+                break;
+        }
         return super.onUnbind(intent);
     }
 

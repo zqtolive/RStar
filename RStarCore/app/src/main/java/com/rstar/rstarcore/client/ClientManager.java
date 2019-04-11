@@ -15,13 +15,13 @@
  */
 package com.rstar.rstarcore.client;
 
+import android.app.ActivityManager;
 import android.content.Context;
 
 import com.rstar.rstarcore.BaseService;
 import com.rstar.rstarcore.IRStarService;
 import com.rstar.rstarcore.R;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
@@ -40,9 +40,11 @@ import java.util.HashMap;
 public class ClientManager extends BaseService {
     private static final String TAG = ClientManager.class.getSimpleName();
     private HashMap<String, ClientService> mClientMap = new HashMap<>();
+    private ActivityMonitor mMonitor;
 
     public ClientManager(IRStarService service, Context context) {
         super(service, context);
+        mMonitor = new ActivityMonitor();
     }
 
     @Override
@@ -55,16 +57,22 @@ public class ClientManager extends BaseService {
     }
 
     @Override
-    protected String description() {
+    public String dumpDescription() {
         return mContext.getString(R.string.description_client_manager);
     }
 
     @Override
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+    public void dump(PrintWriter pw, String[] args) {
         pw.println("Client's count" + mClientMap.size() + ",All clients info:");
         for (ClientService client : mClientMap.values()) {
-            client.getInfo().dump(fd, pw, args);
+            client.getInfo().dump(pw, args);
         }
+    }
+
+    private String genClientKey(String clientName, String clientSignature) {
+        StringBuilder stringBuilder = new StringBuilder(clientName);
+        stringBuilder.append(ClientConst.DIV_CLIENT_KEY).append(clientSignature);
+        return stringBuilder.toString();
     }
 
     /**
@@ -77,16 +85,31 @@ public class ClientManager extends BaseService {
      * @return The handle of IRStarClientApi.Stub
      */
     public ClientService registerClient(String clientName, String clientSignature, String secretKey) {
-        ClientService clientService = null;
-        StringBuilder stringBuilder = new StringBuilder(clientName);
-        stringBuilder.append(ClientConst.DIV_CLIENT_KEY).append(clientSignature);
-        String key = stringBuilder.toString();
+        ClientService clientService;
+        String key = genClientKey(clientName, clientSignature);
         clientService = mClientMap.get(key);
         if (clientService == null) {
-            ClientInfo client = new ClientInfo(clientName, clientSignature, secretKey);
+            ClientInfo client = new ClientInfo(clientName, clientSignature, secretKey, mContext);
             clientService = new ClientService(client);
             mClientMap.put(key, clientService);
+        } else {
+            clientService.onRebind();
         }
         return clientService;
+    }
+
+    /**
+     * While client app unbind with the CoreService, the client should notify ClientManager.
+     *
+     * @param clientName      Unbind client's name.
+     * @param clientSignature Unbind client's signature.
+     */
+    public void clientUnbind(String clientName, String clientSignature) {
+        ClientService clientService;
+        String key = genClientKey(clientName, clientSignature);
+        clientService = mClientMap.get(key);
+        if (clientService != null) {
+            clientService.onUnbind();
+        }
     }
 }

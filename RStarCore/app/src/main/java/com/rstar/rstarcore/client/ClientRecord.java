@@ -17,7 +17,6 @@ package com.rstar.rstarcore.client;
 
 import com.rstar.rstarcore.debug.Dumpable;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
 /**
@@ -38,12 +37,15 @@ class ClientRecord implements Dumpable {
     private OperationType mOperationType;
     private String mDetails;
 
-    ClientRecord(long time) {
-        mTime = time;
+    private ClientRecord(Builder builder) {
+        mTime = System.currentTimeMillis();
+        mState = builder.mState;
+        mOperationType = builder.mOperationType;
+        mDetails = builder.mDetails;
     }
 
     @Override
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+    public void dump(PrintWriter pw, String[] args) {
         pw.print("    time = ");
         pw.print(mTime);
         pw.print(", state = ");
@@ -52,5 +54,63 @@ class ClientRecord implements Dumpable {
         pw.print(mOperationType);
         pw.print(", details = ");
         pw.println(mDetails);
+    }
+
+    /**
+     * @Package: com.rstar.rstarcore.client
+     * @ClassName: ClientRecord
+     * @Description: It's a Builder Pattern. Generate ClientRecord with it.
+     * @Author: 庆涛
+     * @Email: zqt_olive@sina.com
+     * @CreateDate: 2019/4/14 8:48
+     * @UpdateUser:
+     * @UpdateDate: 2019/4/14 8:48
+     * @UpdateRemark:
+     * @Version: 1.0
+     */
+    static class Builder {
+        private ClientState mState;
+        private OperationType mOperationType;
+        private String mDetails;
+
+        Builder(ClientState state) {
+            mState = state;
+        }
+
+        /**
+         * Set the way which change the client state.
+         *
+         * @param operationType Changing type.
+         * @return Builder instance.
+         */
+        Builder operationType(OperationType operationType) {
+            mOperationType = operationType;
+            return this;
+        }
+
+        /**
+         * Set the the detail description that state change reason.
+         *
+         * @param details Changing reason.
+         * @return Builder instance.
+         */
+        Builder details(String details) {
+            mDetails = details;
+            return this;
+        }
+
+        /**
+         * Generate ClientRecord.
+         *
+         * @return ClientRecord instance.
+         */
+        ClientRecord build() {
+            return new ClientRecord(this);
+        }
+    }
+
+    @Override
+    public String dumpDescription() {
+        return null;
     }
 }

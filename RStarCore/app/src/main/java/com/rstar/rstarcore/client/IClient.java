@@ -28,6 +28,4 @@ package com.rstar.rstarcore.client;
  * @Version: 1.0
  */
 interface IClient {
-
-    void registerLifecycle(IClientLifecycle lifecycle);
 }

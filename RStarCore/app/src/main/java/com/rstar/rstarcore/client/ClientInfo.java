@@ -15,12 +15,22 @@
  */
 package com.rstar.rstarcore.client;
 
+import android.content.Context;
+import android.os.IBinder;
+import android.os.RemoteException;
+
+import com.rstar.rstarcore.IRStarClientController;
 import com.rstar.rstarcore.debug.Dumpable;
 import com.rstar.rstarcore.RStarCoreConst;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+
+import static com.rstar.rstarcore.client.OperationType.died;
+import static com.rstar.rstarcore.client.OperationType.pauseByApp;
+import static com.rstar.rstarcore.client.OperationType.resumeByApp;
+import static com.rstar.rstarcore.client.OperationType.start;
+import static com.rstar.rstarcore.client.OperationType.unbindService;
 
 /**
  * @Package: com.rstar.rstarcore.client
@@ -34,33 +44,117 @@ import java.util.ArrayList;
  * @UpdateRemark:
  * @Version: 1.0
  */
-class ClientInfo implements Dumpable {
+class ClientInfo implements Dumpable, IBinder.DeathRecipient, IAppStatusChange {
     private String mClientName;
     private String mSignature;
     private String mSecretKey;
+    private ClientState mCurState = ClientState.paused;
+    private IRStarClientController mController;
     private RStarCoreConst.AppAuthority mAuthority;
     private ArrayList<ClientRecord> mHistory = new ArrayList<>();
 
-    ClientInfo(String clientName, String clientSignature, String secretKey) {
+    ClientInfo(String clientName, String clientSignature, String secretKey, Context context) {
         mClientName = clientName;
         mSignature = clientSignature;
         mSecretKey = secretKey;
-        mHistory.add(new ClientRecord(System.currentTimeMillis()));
     }
 
     @Override
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+    public void dump(PrintWriter pw, String[] args) {
         pw.print("  name = ");
         pw.println(mClientName);
         for (ClientRecord record : mHistory) {
-            record.dump(fd, pw, args);
+            record.dump(pw, args);
         }
     }
 
+    @Override
+    public String dumpDescription() {
+        return null;
+    }
+
+    /**
+     * This function is called by {@link ClientService#onDestroy()}, in order to destroy all
+     * client's information.
+     */
     void onDestroy() {
         mClientName = null;
         mSignature = null;
         mSecretKey = null;
+        mController = null;
         mHistory.clear();
+    }
+
+    /**
+     * {@link ClientService#onUnbind()}
+     */
+    void onUnbind() {
+        mController.asBinder().unlinkToDeath(this, 0);
+        mController = null;
+        notifyStateChange(ClientState.dead, unbindService, mClientName);
+    }
+
+    /**
+     * {@link ClientService#onRebind()}
+     */
+    void onRebind() {
+    }
+
+    /**
+     * Set app controller for clientInfo. Client info can notify client state change with it.
+     *
+     * @param controller app's controller.
+     */
+    void setClientController(IRStarClientController controller) {
+        mController = controller;
+        try {
+            mController.asBinder().linkToDeath(this, 0);
+            notifyStateChange(ClientState.paused, start, mClientName);
+            mController.notifyPause();
+        } catch (RemoteException e) {
+            mController = null;
+            notifyStateChange(ClientState.dead, died, mClientName);
+        }
+    }
+
+    @Override
+    public void binderDied() {
+        mController.asBinder().unlinkToDeath(this, 0);
+        mController = null;
+        notifyStateChange(ClientState.dead, died, mClientName);
+    }
+
+    private void notifyStateChange(ClientState state, OperationType type, Object... args) {
+        if (mCurState != state) {
+            mCurState = state;
+            ClientRecord record = new ClientRecord.Builder(state).operationType(type)
+                    .details(String.format(type.reason(), args)).build();
+            mHistory.add(record);
+            try {
+                if (mCurState == ClientState.paused) {
+                    mController.notifyResume();
+                } else if (mCurState == ClientState.active) {
+                    mController.notifyPause();
+                }
+            } catch (RemoteException e) {
+                mController = null;
+                notifyStateChange(ClientState.dead, died, mClientName);
+            }
+        }
+    }
+
+    @Override
+    public void onResume(String stoppedApp) {
+        notifyStateChange(ClientState.active, resumeByApp, mClientName, stoppedApp);
+    }
+
+    @Override
+    public void onPause(String resumeApp) {
+        notifyStateChange(ClientState.paused, pauseByApp, mClientName, resumeApp);
+    }
+
+    @Override
+    public String getAppName() {
+        return mClientName;
     }
 }

@@ -18,6 +18,7 @@ package com.rstar.rstarcore;
 import android.os.Bundle;
 
 import com.rstar.rstarcore.debug.Dumpable;
+import com.rstar.rstarcore.debug.Testable;
 
 /**
  * @Package: com.rstar.rstarcore
@@ -31,7 +32,7 @@ import com.rstar.rstarcore.debug.Dumpable;
  * @UpdateRemark:
  * @Version: 1.0
  */
-public interface IRStarService extends Dumpable {
+public interface IRStarService extends Dumpable, Testable {
     /**
      * Get special service with service type.
      *

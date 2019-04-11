@@ -19,16 +19,17 @@ import android.content.Context;
 
 import com.rstar.rstarcore.BaseService;
 import com.rstar.rstarcore.IRStarService;
+import com.rstar.rstarcore.R;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * @Package: com.rstar.rstarcore.debug
@@ -49,7 +50,6 @@ public class DebugServer extends BaseService implements Runnable {
     private ServerSocket mServer;
     private volatile boolean mIsRunning;
 
-
     public DebugServer(IRStarService service, Context context) {
         super(service, context);
     }
@@ -60,14 +60,14 @@ public class DebugServer extends BaseService implements Runnable {
     }
 
     @Override
-    protected String description() {
+    public String dumpDescription() {
         return null;
     }
 
     /**
      * Start socket server to receive the debug commands.
      */
-    public void startServer() {
+    public synchronized void startServer() {
         if (!mIsRunning) {
             mIsRunning = true;
             mWorkThread = new Thread(this);
@@ -78,17 +78,34 @@ public class DebugServer extends BaseService implements Runnable {
     /**
      * Stop socket server.
      */
-    public void stopServer() {
+    public synchronized void stopServer() {
         if (mIsRunning) {
             mIsRunning = false;
+            if (mServer != null) {
+                try {
+                    mServer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             mWorkThread.interrupt();
             mWorkThread = null;
         }
     }
 
     @Override
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
-        mService.dump(fd, pw, args);
+    public void dump(PrintWriter pw, String[] args) {
+        if (args == null || args.length < 1 || (!DebugConst.COMMAND_DUMP.equals(args[0])
+                && !DebugConst.COMMAND_TEST.equals(args[0]))) {
+            pw.println(mContext.getString(R.string.prompt_debug_message));
+            pw.print(DebugConst.COMMAND_DUMP);
+            pw.print(" or ");
+            pw.println(DebugConst.COMMAND_TEST);
+        } else if(DebugConst.COMMAND_DUMP.equals(args[0])){
+            mService.dump(pw, args);
+        } else {
+            mService.test(pw, args);
+        }
     }
 
     @Override
@@ -96,14 +113,19 @@ public class DebugServer extends BaseService implements Runnable {
         try {
             mServer = new ServerSocket(DebugConst.PORT);
             while (mIsRunning) {
-                Socket socket = mServer.accept();
+                Socket socket = null;
+                try {
+                    socket = mServer.accept();
+                } catch (SocketException e) {
+                    break;
+                }
                 PrintWriter printWriter = new PrintWriter(new BufferedWriter(
-                        new OutputStreamWriter(socket.getOutputStream(), "UTF-8"))
+                        new OutputStreamWriter(socket.getOutputStream(), DebugConst.FORMAT_CHARSET_UTF_8))
                         , true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
-                        socket.getInputStream(), "UTF-8"));
+                        socket.getInputStream(), DebugConst.FORMAT_CHARSET_UTF_8));
                 String command = in.readLine();
-                dump(null, printWriter, command.split(" "));
+                dump(printWriter, command.split(DebugConst.DIV_COMMAND));
             }
             mServer.close();
         } catch (IOException e) {

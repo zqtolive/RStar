@@ -15,7 +15,6 @@
  */
 package com.rstar.rstarcore.debug;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
 /**
@@ -34,9 +33,16 @@ public interface Dumpable {
     /**
      * Output some information into special file. The information could help us to debug.
      *
-     * @param fd   Output file's descriptior.
      * @param pw   Use it to output information.
      * @param args Use the args to judge what should be output.
      */
-    void dump(FileDescriptor fd, PrintWriter pw, String[] args);
+    void dump(PrintWriter pw, String[] args);
+
+    /**
+     * Get the service function's dumpDescription. Display it while dump system information.
+     * Make developer know which message can output.
+     *
+     * @return
+     */
+    String dumpDescription();
 }

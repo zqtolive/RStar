@@ -28,5 +28,24 @@ package com.rstar.rstarcore.debug;
  * @Version: 1.0
  */
 interface DebugConst {
+    /**
+     * It's the port which debug socket server bind.
+     */
     int PORT = 8686;
+    /**
+     * Define the charset format for inputting command and outputting dump message.
+     */
+    String FORMAT_CHARSET_UTF_8 = "UTF-8";
+    /**
+     * It's the separator of the command.
+     */
+    String DIV_COMMAND = " ";
+    /**
+     * Define the dump command string.
+     */
+    String COMMAND_DUMP = "dump";
+    /**
+     * Define the test command string.
+     */
+    String COMMAND_TEST = "test";
 }

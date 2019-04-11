@@ -6,7 +6,6 @@ import com.rstar.rstarcore.BaseService;
 import com.rstar.rstarcore.IRStarService;
 import com.rstar.rstarcore.R;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
 /**
@@ -32,12 +31,12 @@ public class AuthorityManager extends BaseService {
     }
 
     @Override
-    protected String description() {
+    public String dumpDescription() {
         return mContext.getString(R.string.description_authority_manager);
     }
 
     @Override
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
+    public void dump(PrintWriter pw, String[] args) {
 
     }
 }

@@ -19,11 +19,11 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.rstar.rstarcore.debug.DebugServer;
+import com.rstar.rstarcore.debug.Testable;
 import com.rstar.rstarcore.security.AuthorityManager;
 import com.rstar.rstarcore.client.ClientManager;
 import com.rstar.rstarcore.remote.RemoteService;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
@@ -61,7 +61,7 @@ public class ServiceManager extends BaseService implements IRStarService {
     }
 
     @Override
-    protected String description() {
+    public String dumpDescription() {
         return null;
     }
 
@@ -96,21 +96,27 @@ public class ServiceManager extends BaseService implements IRStarService {
     }
 
     @Override
-    public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
-        if (args == null || args.length < 1) {
+    public void dump(PrintWriter pw, String[] args) {
+        if (args.length < 2) {
             prompt(pw);
         } else {
-            BaseService baseService = findServiceByName(args[0]);
+            BaseService baseService = findServiceByName(args[1]);
             if (baseService == null) {
                 prompt(pw);
             } else {
-
+                baseService.dump(pw, args);
             }
         }
     }
 
     private BaseService findServiceByName(String arg) {
         BaseService service = null;
+        for (BaseService baseService : mServiceMap.values()) {
+            if (baseService.getClass().getSimpleName().equals(arg)) {
+                service = baseService;
+                break;
+            }
+        }
         return service;
     }
 
@@ -120,7 +126,38 @@ public class ServiceManager extends BaseService implements IRStarService {
             pw.print("  ");
             pw.print(service.getClass().getSimpleName());
             pw.print(" : ");
-            pw.println(service.description());
+            pw.println(service.dumpDescription());
         }
+    }
+
+    private void testPrompt(PrintWriter pw) {
+        pw.println(mContext.getString(R.string.prompt_debug_message));
+        for (BaseService service : mServiceMap.values()) {
+            if (service instanceof Testable) {
+                pw.print("  ");
+                pw.print(service.getClass().getSimpleName());
+                pw.print(" : ");
+                pw.println(((Testable) service).testDescription());
+            }
+        }
+    }
+
+    @Override
+    public void test(PrintWriter pw, String[] args) {
+        if (args.length < 2) {
+            testPrompt(pw);
+        } else {
+            BaseService baseService = findServiceByName(args[1]);
+            if (baseService == null || !(baseService instanceof Testable)) {
+                testPrompt(pw);
+            } else {
+                ((Testable) baseService).test(pw, args);
+            }
+        }
+    }
+
+    @Override
+    public String testDescription() {
+        return null;
     }
 }

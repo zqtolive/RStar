@@ -5,4 +5,5 @@
     <string name="description_remote_service">You can dump network state and so on.</string>
     <string name="description_authority_manager">You can dump all clients authority.</string>
     <string name="prompt_debug_message">You can input command:</string>
+    <string name="string_or"> or </string>
 </resources>

@@ -20,9 +20,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.annotation.NonNull;
 
-import com.rstar.rstarcore.aidl.IRStarClientApi;
+import com.rstar.rstarcore.IRStarClientApi;
+import com.rstar.rstarcore.IRStarClientController;
 
 /**
  * @Package: com.rstar.rstarcore.appclient
@@ -41,9 +43,31 @@ public class RStarApi {
 
     private Context mContext;
     private IRStarClientApi mApi;
+    private IRStarAppInfo mAppInfo;
+    private IRStarClientController mController;
+    private ServiceConnection mConnection;
 
-    public RStarApi(@NonNull Context context) {
+    public RStarApi(@NonNull Context context, @NonNull IRStarAppInfo appInfo
+            , @NonNull IRStarClientController controller) {
         mContext = context.getApplicationContext();
+        mAppInfo = appInfo;
+        mController = controller;
+        mConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                mApi = IRStarClientApi.Stub.asInterface(service);
+                try {
+                    mApi.registerAppController(mController);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                mApi = null;
+            }
+        };
     }
 
     /**
@@ -54,22 +78,11 @@ public class RStarApi {
         intent.putExtra(AppClientConst.KEY_APP_NAME, mContext.getPackageName());
         intent.putExtra(AppClientConst.KEY_APP_SIGNATURE, AppSignatureHelper
                 .getAppSignature(mContext, AppClientConst.SignatureType.SHA1));
-        intent.putExtra(AppClientConst.KEY_APP_SECRETKEY, mContext.getPackageName());
-        mContext.bindService(intent, new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                mApi = IRStarClientApi.Stub.asInterface(service);
-            }
+        intent.putExtra(AppClientConst.KEY_APP_SECRETKEY, mAppInfo.getAppSecretKey());
+        mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    }
 
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-                mApi = null;
-            }
-
-            @Override
-            public void onBindingDied(ComponentName name) {
-
-            }
-        }, Context.BIND_AUTO_CREATE);
+    public final void disconnect() {
+        mContext.unbindService(mConnection);
     }
 }

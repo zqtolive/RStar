@@ -13,19 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.client;
+package com.rstar.rstarcore.debug;
+
+import java.io.PrintWriter;
 
 /**
- * @Package: com.rstar.rstarcore.client
- * @ClassName: IClientLifecycle
- * @Description: monitor the client's running state.
+ * @Package: com.rstar.rstarcore.debug
+ * @ClassName: Testable
+ * @Description:
  * @Author: 庆涛
  * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/10 12:53
+ * @CreateDate: 2019/4/12 11:22
  * @UpdateUser:
- * @UpdateDate: 2019/4/10 12:53
+ * @UpdateDate: 2019/4/12 11:22
  * @UpdateRemark:
  * @Version: 1.0
  */
-interface IClientLifecycle {
+public interface Testable {
+    /**
+     * Output some test result into special file. The information could help us to debug.
+     *
+     * @param pw   Use it to output test result.
+     * @param args Test case input parameters.
+     */
+    void test(PrintWriter pw, String[] args);
+
+    /**
+     * Get the service function's testDescription. Let's know how to use test , the module's
+     * function and what can output.
+     *
+     * @return Description string.
+     */
+    String testDescription();
 }

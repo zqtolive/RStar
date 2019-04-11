@@ -13,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.aidl;
+package com.rstar.rstarcore;
 
 // Declare any non-default types here with import statements
 
-interface IRStarClientApi {
+interface IRStarClientController {
+    void notifyPause();
+    void notifyResume();
+    void notifyFinish();
 }

@@ -15,7 +15,12 @@
  */
 package com.rstar.rstarcore.client;
 
-import com.rstar.rstarcore.aidl.IRStarClientApi;
+import android.app.ActivityManager;
+import android.content.Context;
+import android.os.RemoteException;
+
+import com.rstar.rstarcore.IRStarClientApi;
+import com.rstar.rstarcore.IRStarClientController;
 
 /**
  * @Package: com.rstar.rstarcore.client
@@ -40,8 +45,30 @@ public class ClientService extends IRStarClientApi.Stub {
         return mInfo;
     }
 
+    /**
+     * While CoreService destroy will call it to destroy ClientService.
+     */
     void onDestroy() {
         mInfo.onDestroy();
         mInfo = null;
+    }
+
+    /**
+     * While client unbind with CoreService, it will be called.
+     */
+    void onUnbind() {
+        mInfo.onUnbind();
+    }
+
+    /**
+     * While the client app rebind to CoreService, it will be called.
+     */
+    void onRebind() {
+        mInfo.onRebind();
+    }
+
+    @Override
+    public void registerAppController(IRStarClientController controller) throws RemoteException {
+        mInfo.setClientController(controller);
     }
 }
