@@ -13,19 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.appclient;
+package com.rstar.libariescore;
 
 /**
- * @Package: com.rstar.rstarcore.appclient
- * @ClassName: IServiceConnectListener
- * @Description: Define the interface to observer the service connecting state.
+ * @Package: com.rstar.libariescore
+ * @ClassName: IAppLifecycle
+ * @Description: While application create, will call the interface to notify user do same operation.
  * @Author: 庆涛
  * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/10 12:34
+ * @CreateDate: 2019/4/29 15:38
  * @UpdateUser:
- * @UpdateDate: 2019/4/10 12:34
+ * @UpdateDate: 2019/4/29 15:38
  * @UpdateRemark:
  * @Version: 1.0
  */
-public interface IServiceConnectListener {
+public interface IAppLifecycle {
+    /**
+     * Notify user to do same init operation will application create.
+     *
+     * @param application The app's application.
+     */
+    void onCreate(AriesApplication application);
 }

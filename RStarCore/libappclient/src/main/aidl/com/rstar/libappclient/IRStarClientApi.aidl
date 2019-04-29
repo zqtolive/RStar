@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore;
+package com.rstar.libappclient;
 
-import com.rstar.rstarcore.IRStarClientController;
+import com.rstar.libappclient.IRStarClientController;
 
 // Declare any non-default types here with import statements
 

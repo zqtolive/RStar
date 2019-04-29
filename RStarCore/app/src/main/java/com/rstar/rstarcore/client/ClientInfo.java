@@ -19,7 +19,7 @@ import android.content.Context;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import com.rstar.rstarcore.IRStarClientController;
+import com.rstar.libappclient.IRStarClientController;
 import com.rstar.rstarcore.debug.Dumpable;
 import com.rstar.rstarcore.RStarCoreConst;
 

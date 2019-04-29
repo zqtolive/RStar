@@ -1,1 +1,1 @@
-include ':app', ':libariescore'
+include ':app', ':libariescore', ':libplayer'

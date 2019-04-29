@@ -15,9 +15,12 @@
  */
 package com.rstar.libariescore.refactor;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @Package: com.rstar.libariescore.refactor
@@ -59,5 +62,40 @@ public class RefactorUtil {
             }
         }
         return result;
+    }
+
+    /**
+     * Create class's instance with on parameters.
+     *
+     * @param className Class's name.
+     * @param baseClass The class's parent class.
+     * @param <T>
+     * @return Class's instance.
+     */
+    public static <T> T createInstanceWithoutParam(@NonNull String className, Class baseClass) {
+        T instance = null;
+        try {
+            Class targetClass = Class.forName(className);
+            if (baseClass != null && !baseClass.isAssignableFrom(targetClass)) {
+                targetClass = null;
+            }
+
+            if (targetClass != null) {
+                Constructor<T> constructor = targetClass.getConstructor();
+                constructor.setAccessible(true);
+                instance = constructor.newInstance();
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return instance;
     }
 }

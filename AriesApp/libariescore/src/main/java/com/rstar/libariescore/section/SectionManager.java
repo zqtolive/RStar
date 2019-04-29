@@ -15,6 +15,8 @@
  */
 package com.rstar.libariescore.section;
 
+import com.rstar.libariescore.content.AriesContext;
+
 /**
  * @Package: com.rstar.libariescore.section
  * @ClassName: SectionManager
@@ -28,4 +30,5 @@ package com.rstar.libariescore.section;
  * @Version: 1.0
  */
 class SectionManager {
+    private AriesContext mAriesContext;
 }

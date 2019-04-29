@@ -13,12 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore;
+package com.rstar.libappclient;
 
-// Declare any non-default types here with import statements
-
-interface IRStarClientController {
-    void notifyPause();
-    void notifyResume();
-    void notifyFinish();
+/**
+ * @Package: com.rstar.rstarcore.appclient
+ * @ClassName: IServiceConnectListener
+ * @Description: Define the interface to observer the service connecting state.
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/10 12:34
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/10 12:34
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
+public interface IServiceConnectListener {
 }

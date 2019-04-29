@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.appclient;
-
-import com.rstar.rstarcore.RStarCoreConst;
+package com.rstar.libappclient;
 
 /**
  * @Package: com.rstar.rstarcore.appclient
@@ -29,23 +27,23 @@ import com.rstar.rstarcore.RStarCoreConst;
  * @UpdateRemark:
  * @Version: 1.0
  */
-interface AppClientConst {
+public interface AppClientConst {
     /**
      * Define the key of app package name in bundle.
      */
-    String KEY_APP_NAME = RStarCoreConst.KEY_APP_NAME;
+    String KEY_APP_NAME = "key_app_name";
     /**
      * Define the key of app signature in bundle.
      */
-    String KEY_APP_SIGNATURE = RStarCoreConst.KEY_APP_SIGNATURE;
+    String KEY_APP_SIGNATURE = "key_app_signature";
     /**
      * Define the app secret key in bundle.
      */
-    String KEY_APP_SECRETKEY = RStarCoreConst.KEY_APP_SECRETKEY;
+    String KEY_APP_SECRETKEY = "key_app_secretkey";
     /**
      * It's the action connect with RStarCore service.
      */
-    String ACTION_CORE_SERVICE = RStarCoreConst.ACTION_CORE_SERVICE;
+    String ACTION_CORE_SERVICE = "com.rstar.rstarcore.coreservice";
 
     /**
      * Define the signature type. Default is SHA1.

@@ -34,8 +34,11 @@ class SectionInfo {
     @LayoutRes
     private int mLayoutId;
 
-    SectionInfo(@NonNull SectionDes sectionDes) {
+    SectionInfo(@NonNull SectionDes sectionDes, FloatSectionDes floatSectionDes) {
         mLayoutId = sectionDes.layoutId();
+        if (floatSectionDes != null) {
+
+        }
     }
 
     int getLayoutId() {

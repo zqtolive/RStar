@@ -22,6 +22,14 @@ allprojects {
     }
 }
 
+subprojects {
+    afterEvaluate {
+        android {
+            resourcePrefix "${project.name}_"
+        }
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

@@ -1,2 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rstar.libariescore" />
+    package="com.rstar.libariescore">
+
+    <application
+        android:name=".AriesApplication"
+        android:allowBackup="false">
+    </application>
+</manifest>

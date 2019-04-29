@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.appclient;
+package com.rstar.ariesapp;
+
+import com.rstar.libariescore.AriesApplication;
+import com.rstar.libariescore.IAppLifecycle;
 
 /**
- * @Package: com.rstar.rstarcore.appclient
- * @ClassName: IRStarAppInfo
- * @Description: Define the interface to control the app client.
+ * @Package: com.rstar.ariesapp
+ * @ClassName: AppCreateListener
+ * @Description:
  * @Author: 庆涛
  * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/10 12:30
+ * @CreateDate: 2019/4/29 15:49
  * @UpdateUser:
- * @UpdateDate: 2019/4/10 12:30
+ * @UpdateDate: 2019/4/29 15:49
  * @UpdateRemark:
  * @Version: 1.0
  */
-public interface IRStarAppInfo {
-    /**
-     * Get the app's secret key.
-     *
-     * @return App's secret key.
-     */
-    String getAppSecretKey();
+public class AppCreateListener implements IAppLifecycle {
+    @Override
+    public void onCreate(AriesApplication application) {
+    }
 }

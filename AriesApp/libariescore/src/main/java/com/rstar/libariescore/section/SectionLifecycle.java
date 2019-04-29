@@ -15,6 +15,8 @@
  */
 package com.rstar.libariescore.section;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 /**
@@ -33,42 +35,42 @@ interface SectionLifecycle {
     /**
      * Call the function to create section.
      */
-    void onCreate();
+    void onSectionCreate(@Nullable Bundle savedInstanceState);
 
     /**
      * After section's view created, the function will be called to notify section.
      *
      * @param view Section's view, use it to show the UI.
      */
-    void onViewCreated(View view);
+    void onSectionViewCreated(View view);
 
     /**
      * While the section call be see, the function will be call.
      */
-    void onStart();
+    void onSectionStart();
 
     /**
      * While the section active, it will be call.
      */
-    void onResume();
+    void onSectionResume();
 
     /**
      * While the section's state change to inactive, it will be call.
      */
-    void onPause();
+    void onSectionPause();
 
     /**
      * While the section can't be see, it will be call.
      */
-    void onStop();
+    void onSectionStop();
 
     /**
      * After the view destroy, it will be call.
      */
-    void onViewDestroyed();
+    void onSectionViewDestroyed();
 
     /**
      * While the section destroy, it will be call.
      */
-    void onDestroy();
+    void onSectionDestroy();
 }

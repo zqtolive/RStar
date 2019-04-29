@@ -15,12 +15,10 @@
  */
 package com.rstar.rstarcore.client;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.os.RemoteException;
 
-import com.rstar.rstarcore.IRStarClientApi;
-import com.rstar.rstarcore.IRStarClientController;
+import com.rstar.libappclient.IRStarClientApi;
+import com.rstar.libappclient.IRStarClientController;
 
 /**
  * @Package: com.rstar.rstarcore.client

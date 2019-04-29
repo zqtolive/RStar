@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.appclient;
+package com.rstar.libappclient;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -22,9 +22,6 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
-
-import com.rstar.rstarcore.IRStarClientApi;
-import com.rstar.rstarcore.IRStarClientController;
 
 /**
  * @Package: com.rstar.rstarcore.appclient

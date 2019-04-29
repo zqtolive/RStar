@@ -15,6 +15,8 @@
  */
 package com.rstar.rstarcore;
 
+import com.rstar.libappclient.AppClientConst;
+
 /**
  * @Package: com.rstar.rstarcore
  * @ClassName: RStarCoreConst
@@ -31,19 +33,19 @@ public interface RStarCoreConst {
     /**
      * Define the key of app package name in bundle.
      */
-    String KEY_APP_NAME = "key_app_name";
+    String KEY_APP_NAME = AppClientConst.KEY_APP_NAME;
     /**
      * Define the key of app signature in bundle.
      */
-    String KEY_APP_SIGNATURE = "key_app_signature";
+    String KEY_APP_SIGNATURE = AppClientConst.KEY_APP_SIGNATURE;
     /**
      * Define the app secret key in bundle.
      */
-    String KEY_APP_SECRETKEY = "key_app_secretkey";
+    String KEY_APP_SECRETKEY = AppClientConst.KEY_APP_SECRETKEY;
     /**
      * It's the action connect with RStarCore service.
      */
-    String ACTION_CORE_SERVICE = "com.rstar.rstarcore.coreservice";
+    String ACTION_CORE_SERVICE = AppClientConst.ACTION_CORE_SERVICE;
 
     /**
      * Define the client manager's type string.
