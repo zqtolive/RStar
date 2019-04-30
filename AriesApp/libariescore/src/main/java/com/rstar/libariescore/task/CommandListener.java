@@ -13,16 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.libappclient;
+package com.rstar.libariescore.task;
 
-// Declare any non-default types here with import statements
-
-interface IRStarClientController {
-    String test(String args);
-    String testPrompt();
-    String dump(String args);
-    String dumpPrompt();
-    void notifyPause();
-    void notifyResume();
-    void notifyFinish();
+/**
+ * @Package: com.rstar.libariescore.task
+ * @ClassName: CommandListener
+ * @Description:
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/30 17:03
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/30 17:03
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
+interface CommandListener {
+    boolean onNewCommand(String intent);
 }

@@ -15,14 +15,26 @@
  */
 package com.rstar.libappclient;
 
-// Declare any non-default types here with import statements
+/**
+ * @Package: com.rstar.libappclient
+ * @ClassName: IConnectListener
+ * @Description: Monitor the service connecting status.
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/30 15:54
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/30 15:54
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
+public interface IConnectListener {
+    /**
+     * While service connect will notify with the function.
+     */
+    void onConnected();
 
-interface IRStarClientController {
-    String test(String args);
-    String testPrompt();
-    String dump(String args);
-    String dumpPrompt();
-    void notifyPause();
-    void notifyResume();
-    void notifyFinish();
+    /**
+     * While disconnect with service, it will be call.
+     */
+    void onDisconnected();
 }

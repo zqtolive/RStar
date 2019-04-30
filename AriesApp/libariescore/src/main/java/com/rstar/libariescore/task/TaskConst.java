@@ -13,16 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.libappclient;
+package com.rstar.libariescore.task;
 
-// Declare any non-default types here with import statements
-
-interface IRStarClientController {
-    String test(String args);
-    String testPrompt();
-    String dump(String args);
-    String dumpPrompt();
-    void notifyPause();
-    void notifyResume();
-    void notifyFinish();
+/**
+ * @Package: com.rstar.libariescore.task
+ * @ClassName: TaskConst
+ * @Description: Define the task module's const.
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/30 9:32
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/30 9:32
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
+interface TaskConst {
+    String NAME_TASK_RUN_THREAD = "aries_task";
+    int MSG_START_INIT = 0;
 }

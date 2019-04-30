@@ -43,19 +43,33 @@ public class RStarApi {
     private IRStarAppInfo mAppInfo;
     private IRStarClientController mController;
     private ServiceConnection mConnection;
+    private IConnectListener mConnectListener;
+    private IBinder.DeathRecipient mDeathRecipient;
 
     public RStarApi(@NonNull Context context, @NonNull IRStarAppInfo appInfo
-            , @NonNull IRStarClientController controller) {
+            , @NonNull IRStarClientController controller, IConnectListener connectListener) {
         mContext = context.getApplicationContext();
         mAppInfo = appInfo;
         mController = controller;
+        mConnectListener = connectListener;
+        mDeathRecipient = new IBinder.DeathRecipient() {
+            @Override
+            public void binderDied() {
+                mApi.asBinder().unlinkToDeath(mDeathRecipient, 0);
+                if (mConnectListener != null) {
+                    mConnectListener.onDisconnected();
+                }
+            }
+        };
         mConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 mApi = IRStarClientApi.Stub.asInterface(service);
                 try {
+                    service.linkToDeath(mDeathRecipient, 0);
                     mApi.registerAppController(mController);
                 } catch (RemoteException e) {
+                    service.unlinkToDeath(mDeathRecipient, 0);
                     e.printStackTrace();
                 }
             }

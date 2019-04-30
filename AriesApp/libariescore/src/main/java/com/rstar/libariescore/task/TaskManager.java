@@ -13,16 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.libappclient;
+package com.rstar.libariescore.task;
 
-// Declare any non-default types here with import statements
+import android.os.HandlerThread;
 
-interface IRStarClientController {
-    String test(String args);
-    String testPrompt();
-    String dump(String args);
-    String dumpPrompt();
-    void notifyPause();
-    void notifyResume();
-    void notifyFinish();
+/**
+ * @Package: com.rstar.libariescore.task
+ * @ClassName: TaskManager
+ * @Description: Manage the tasks.
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/30 9:18
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/30 9:18
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
+public class TaskManager {
+    private TaskRunHandler mRunHandler;
+
+    public TaskManager(){
+        HandlerThread runThread = new HandlerThread(TaskConst.NAME_TASK_RUN_THREAD);
+        mRunHandler = new TaskRunHandler(runThread.getLooper());
+        runThread.start();
+    }
 }

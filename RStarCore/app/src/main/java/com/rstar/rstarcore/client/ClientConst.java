@@ -29,4 +29,6 @@ package com.rstar.rstarcore.client;
  */
 interface ClientConst {
     char DIV_CLIENT_KEY = '@';
+    String CMD_DUMP_ALL = "all";
+    String CMD_DUMP_CLIENT_HISTORY = "history";
 }

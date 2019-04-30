@@ -61,11 +61,41 @@ public class ClientManager extends BaseService {
         return mContext.getString(R.string.description_client_manager);
     }
 
+    private void prompt(PrintWriter pw) {
+        pw.println(mContext.getString(R.string.prompt_debug_message));
+        pw.println(mContext.getString(R.string.prompt_client_manager_all));
+        for (ClientService client : mClientMap.values()) {
+            pw.println(client.getInfo().getAppName());
+        }
+    }
+
+    private ClientService findClientByName(String name) {
+        ClientService clientService = null;
+        for (ClientService client : mClientMap.values()) {
+            if (client.getInfo().getAppName().equals(name)) {
+                clientService = client;
+                break;
+            }
+        }
+        return clientService;
+    }
+
     @Override
     public void dump(PrintWriter pw, String[] args) {
-        pw.println("Client's count" + mClientMap.size() + ",All clients info:");
-        for (ClientService client : mClientMap.values()) {
-            client.getInfo().dump(pw, args);
+        if (args.length < 3) {
+            prompt(pw);
+        } else if (args[2].equals(ClientConst.CMD_DUMP_ALL)) {
+            pw.println("Client's count" + mClientMap.size() + ",All clients info:");
+            for (ClientService client : mClientMap.values()) {
+                client.getInfo().dump(pw);
+            }
+        } else {
+            ClientService clientService = findClientByName(args[2]);
+            if (clientService == null) {
+                prompt(pw);
+            } else {
+                clientService.getInfo().dump(pw, args);
+            }
         }
     }
 

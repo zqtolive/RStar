@@ -15,14 +15,29 @@
  */
 package com.rstar.libappclient;
 
-// Declare any non-default types here with import statements
+import android.os.IBinder;
 
-interface IRStarClientController {
-    String test(String args);
-    String testPrompt();
-    String dump(String args);
-    String dumpPrompt();
-    void notifyPause();
-    void notifyResume();
-    void notifyFinish();
+/**
+ * @Package: com.rstar.libappclient
+ * @ClassName: ServiceDeathRecipient
+ * @Description:
+ * @Author: 庆涛
+ * @Email: zqt_olive@sina.com
+ * @CreateDate: 2019/4/30 16:05
+ * @UpdateUser:
+ * @UpdateDate: 2019/4/30 16:05
+ * @UpdateRemark:
+ * @Version: 1.0
+ */
+class ServiceDeathRecipient implements IBinder.DeathRecipient {
+    private IConnectListener mConnectListener;
+
+    ServiceDeathRecipient(IConnectListener connectListener) {
+        mConnectListener = connectListener;
+    }
+
+    @Override
+    public void binderDied() {
+        mConnectListener.onDisconnected();
+    }
 }

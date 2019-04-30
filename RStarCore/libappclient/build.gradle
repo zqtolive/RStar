@@ -3,12 +3,12 @@ import java.text.SimpleDateFormat
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
 
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -28,7 +28,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -43,7 +43,7 @@ task buildRStarSDK(dependsOn: ['build'], type: Jar) {
         attributes 'RStarSDK-Version': RStarSDKVersion
     }
     archiveName = 'rstarsdk.jar'
-    from('build/intermediates/classes/debug')
+    from('build/intermediates/javac/debug/compileDebugJavaWithJavac/classes')
     destinationDir = file('build/libs')
     include('com/rstar/libappclient/*.class')
 }

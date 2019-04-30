@@ -45,6 +45,8 @@ public interface AppClientConst {
      */
     String ACTION_CORE_SERVICE = "com.rstar.rstarcore.coreservice";
 
+    String DUMP_CMD_DIV_CHAR = ";";
+
     /**
      * Define the signature type. Default is SHA1.
      */

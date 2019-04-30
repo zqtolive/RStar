@@ -19,6 +19,7 @@ import android.content.Context;
 import android.os.IBinder;
 import android.os.RemoteException;
 
+import com.rstar.libappclient.AppClientConst;
 import com.rstar.libappclient.IRStarClientController;
 import com.rstar.rstarcore.debug.Dumpable;
 import com.rstar.rstarcore.RStarCoreConst;
@@ -52,6 +53,7 @@ class ClientInfo implements Dumpable, IBinder.DeathRecipient, IAppStatusChange {
     private IRStarClientController mController;
     private RStarCoreConst.AppAuthority mAuthority;
     private ArrayList<ClientRecord> mHistory = new ArrayList<>();
+    private String mClientDumpDes;
 
     ClientInfo(String clientName, String clientSignature, String secretKey, Context context) {
         mClientName = clientName;
@@ -59,12 +61,39 @@ class ClientInfo implements Dumpable, IBinder.DeathRecipient, IAppStatusChange {
         mSecretKey = secretKey;
     }
 
+    private void prompt(PrintWriter pw) {
+        pw.println(ClientConst.CMD_DUMP_CLIENT_HISTORY);
+        pw.println(mClientDumpDes);
+    }
+
     @Override
     public void dump(PrintWriter pw, String[] args) {
+        if (args.length < 4) {
+            prompt(pw);
+        } else if (args[3].equals(ClientConst.CMD_DUMP_CLIENT_HISTORY)) {
+            dump(pw);
+        } else if (mController != null) {
+            String echo;
+            StringBuilder stringBuilder = new StringBuilder(args[3]);
+            for (int i = 4; i < args.length; i++) {
+                stringBuilder.append(AppClientConst.DUMP_CMD_DIV_CHAR).append(args[i]);
+            }
+            try {
+                echo = mController.dump(stringBuilder.toString());
+                pw.println(echo);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        } else {
+            prompt(pw);
+        }
+    }
+
+    void dump(PrintWriter pw) {
         pw.print("  name = ");
         pw.println(mClientName);
         for (ClientRecord record : mHistory) {
-            record.dump(pw, args);
+            record.dump(pw, null);
         }
     }
 
@@ -82,6 +111,7 @@ class ClientInfo implements Dumpable, IBinder.DeathRecipient, IAppStatusChange {
         mSignature = null;
         mSecretKey = null;
         mController = null;
+        mClientDumpDes = null;
         mHistory.clear();
     }
 
@@ -111,6 +141,7 @@ class ClientInfo implements Dumpable, IBinder.DeathRecipient, IAppStatusChange {
             mController.asBinder().linkToDeath(this, 0);
             notifyStateChange(ClientState.paused, start, mClientName);
             mController.notifyPause();
+            mClientDumpDes = mController.dumpPrompt();
         } catch (RemoteException e) {
             mController = null;
             notifyStateChange(ClientState.dead, died, mClientName);
