@@ -29,4 +29,9 @@ package com.rstar.libariescore;
  */
 public interface AriesCoreConst {
     String NAME_METADATA_LIFECYCLE = "ApplicationLifecycle";
+    String NAME_METADATA_USER_SERVICE_CREATOR = "UserService";
+    String NAME_TASK_RUN_LOOPER = "aries_task";
+    String NAME_MAIN_LOOPER = "main_looper";
+    String NAME_SERVICE_CORE = "core_service";
+    int INVALID = -1;
 }

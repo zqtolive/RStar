@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.libariescore.task.impl;
+package com.rstar.libariescore.content;
 
-import com.rstar.libariescore.task.BaseTask;
+import com.rstar.libappclient.debug.Dumpable;
+import com.rstar.libappclient.debug.Testable;
 
 /**
- * @Package: com.rstar.libariescore.task.impl
- * @ClassName: InitTask
+ * @Package: com.rstar.libariescore.content
+ * @ClassName: ISystemService
  * @Description:
  * @Author: 庆涛
  * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/30 17:01
+ * @CreateDate: 2019/5/9 15:03
  * @UpdateUser:
- * @UpdateDate: 2019/4/30 17:01
+ * @UpdateDate: 2019/5/9 15:03
  * @UpdateRemark:
  * @Version: 1.0
  */
-public class InitTask extends BaseTask {
+public interface ISystemService extends Dumpable, Testable {
 }

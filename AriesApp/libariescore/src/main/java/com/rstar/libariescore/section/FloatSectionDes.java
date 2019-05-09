@@ -15,6 +15,8 @@
  */
 package com.rstar.libariescore.section;
 
+import android.view.ViewGroup;
+
 /**
  * @Package: com.rstar.libariescore.section
  * @ClassName: FloatSectionDes
@@ -28,4 +30,11 @@ package com.rstar.libariescore.section;
  * @Version: 1.0
  */
 public @interface FloatSectionDes {
+    int x() default 0;
+
+    int y() default 0;
+
+    int width() default ViewGroup.LayoutParams.MATCH_PARENT;
+
+    int height() default ViewGroup.LayoutParams.MATCH_PARENT;
 }

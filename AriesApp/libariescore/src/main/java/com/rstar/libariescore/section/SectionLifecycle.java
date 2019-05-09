@@ -16,6 +16,7 @@
 package com.rstar.libariescore.section;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.view.View;
 
@@ -33,16 +34,22 @@ import android.view.View;
  */
 interface SectionLifecycle {
     /**
-     * Call the function to create section.
+     * {@link android.app.Fragment#onCreate}
      */
     void onSectionCreate(@Nullable Bundle savedInstanceState);
 
     /**
-     * After section's view created, the function will be called to notify section.
+     * While prepare to create view, the function will be call for getting layout id.
      *
-     * @param view Section's view, use it to show the UI.
+     * @return View's layoutId.
      */
-    void onSectionViewCreated(View view);
+    @LayoutRes
+    int onSectionCreateView();
+
+    /**
+     * {@link android.app.Fragment#onViewCreated(View, Bundle)}
+     */
+    void onSectionViewCreated(View view, @Nullable Bundle savedInstanceState);
 
     /**
      * While the section call be see, the function will be call.

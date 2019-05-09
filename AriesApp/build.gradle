@@ -2,6 +2,7 @@
 
 buildscript {
     repositories {
+        mavenCentral()
         google()
         jcenter()
         
@@ -22,13 +23,13 @@ allprojects {
     }
 }
 
-subprojects {
-    afterEvaluate {
-        android {
-            resourcePrefix "${project.name}_"
-        }
-    }
-}
+//subprojects {
+//    afterEvaluate {
+//        android {
+//            resourcePrefix "${project.name}_"
+//        }
+//    }
+//}
 
 task clean(type: Delete) {
     delete rootProject.buildDir

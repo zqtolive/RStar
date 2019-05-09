@@ -1,0 +1,22 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+ext {
+    bintrayName = 'aries_mvp_register'
+    artifact = bintrayName
+    libraryName = 'Aries mvp register gradle plugin'
+    libraryDescription = 'A gradle plugin used for Aries mvp binding info register'
+    libraryVersion = 1.0
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+dependencies {
+    compile 'com.android.tools.build:gradle:2.2.0'
+    compile 'com.android.tools.build:transform-api:1.5.0'
+}
+
+apply from: '../install.gradle'

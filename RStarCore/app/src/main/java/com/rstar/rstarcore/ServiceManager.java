@@ -19,7 +19,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.rstar.rstarcore.debug.DebugServer;
-import com.rstar.rstarcore.debug.Testable;
+import com.rstar.libappclient.debug.Testable;
 import com.rstar.rstarcore.security.AuthorityManager;
 import com.rstar.rstarcore.client.ClientManager;
 import com.rstar.rstarcore.remote.RemoteService;

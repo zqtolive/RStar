@@ -15,6 +15,16 @@
  */
 package com.rstar.libariescore.content;
 
+import android.content.Context;
+import android.os.Looper;
+
+import com.rstar.libappclient.debug.Dumpable;
+import com.rstar.libariescore.AriesCoreConst;
+import com.rstar.libariescore.UserServiceCreator;
+
+import java.io.PrintWriter;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * @Package: com.rstar.libariescore.content
  * @ClassName: AriesContext
@@ -27,8 +37,57 @@ package com.rstar.libariescore.content;
  * @UpdateRemark:
  * @Version: 1.0
  */
-public class AriesContext implements IContext {
-    public AriesContext() {
+public class AriesContext implements IContext, Dumpable {
+    private Context mContext;
+    private InitTask mInitTask;
+    private ConcurrentHashMap<String, ISystemService> mServiceMap;
+    private ConcurrentHashMap<String, Looper> mRunningLoopers;
 
+    public AriesContext(Context context, UserServiceCreator creator) {
+        mContext = context;
+        mServiceMap = new ConcurrentHashMap<>();
+        mRunningLoopers = new ConcurrentHashMap<>();
+        mRunningLoopers.put(AriesCoreConst.NAME_MAIN_LOOPER, Looper.getMainLooper());
+        mInitTask = new InitTask(this);
+        mInitTask.start(creator);
+    }
+
+    void attachLooper(String looperName, Looper looper) {
+        if (mRunningLoopers.contains(looperName)) {
+            throw new IllegalStateException("There is a same name looper attach to context!");
+        }
+        mRunningLoopers.put(looperName, looper);
+    }
+
+    void attachSystemService(String serviceName, ISystemService systemService) {
+        if (mServiceMap.contains(serviceName)) {
+            throw new IllegalStateException("There is a same name service attach to context!");
+        }
+        mServiceMap.put(serviceName, systemService);
+    }
+
+    @Override
+    public Context getContext() {
+        return mContext;
+    }
+
+    @Override
+    public ISystemService getSystemService(String serviceName) {
+        return mServiceMap.get(serviceName);
+    }
+
+    @Override
+    public Looper getLooper(String looperName) {
+        return mRunningLoopers.get(looperName);
+    }
+
+    @Override
+    public void dump(PrintWriter printWriter, String[] strings) {
+
+    }
+
+    @Override
+    public String dumpDescription() {
+        return null;
     }
 }

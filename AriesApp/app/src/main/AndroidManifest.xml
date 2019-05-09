@@ -19,6 +19,9 @@
         <meta-data
             android:name="ApplicationLifecycle"
             android:value="com.rstar.ariesapp.AppCreateListener" />
+        <meta-data
+            android:name="UserService"
+            android:value="com.rstar.ariesapp.AppCreateListener" />
     </application>
 
 </manifest>

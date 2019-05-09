@@ -46,5 +46,6 @@ task buildRStarSDK(dependsOn: ['build'], type: Jar) {
     from('build/intermediates/javac/debug/compileDebugJavaWithJavac/classes')
     destinationDir = file('build/libs')
     include('com/rstar/libappclient/*.class')
+    include('com/rstar/libappclient/debug/*.class')
 }
 

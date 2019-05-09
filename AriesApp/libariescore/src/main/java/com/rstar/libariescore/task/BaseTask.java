@@ -15,6 +15,7 @@
  */
 package com.rstar.libariescore.task;
 
+import com.rstar.libariescore.content.BaseContext;
 import com.rstar.libariescore.content.IContext;
 
 /**
@@ -29,6 +30,20 @@ import com.rstar.libariescore.content.IContext;
  * @UpdateRemark:
  * @Version: 1.0
  */
-public abstract class BaseTask implements TaskLifecycle, IContext {
+public abstract class BaseTask<T, E> extends BaseContext implements TaskLifecycle, CommandListener {
+    private T mRouterProxy;
 
+    protected BaseTask() {
+        super(null);
+    }
+
+    final void attachRouter(T routerProxy) {
+        mRouterProxy = routerProxy;
+    }
+
+    protected final T getRouter() {
+        return mRouterProxy;
+    }
+
+    protected abstract E getTaskService();
 }

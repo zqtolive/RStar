@@ -1,11 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion Integer.valueOf(COMPILE_SDK_VERSION)
+    buildToolsVersion BUILDTOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 28
+        minSdkVersion Integer.valueOf(MIN_SDK_VERSION)
+        targetSdkVersion Integer.valueOf(TARGET_SDK_VERSION)
         versionCode 1
         versionName "1.0"
 
@@ -25,7 +26,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

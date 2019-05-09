@@ -18,7 +18,7 @@ package com.rstar.rstarcore;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.rstar.rstarcore.debug.Dumpable;
+import com.rstar.libappclient.debug.Dumpable;
 
 /**
  * @Package: com.rstar.rstarcore

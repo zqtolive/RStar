@@ -15,7 +15,7 @@
  */
 package com.rstar.rstarcore.client;
 
-import com.rstar.rstarcore.debug.Dumpable;
+import com.rstar.libappclient.debug.Dumpable;
 
 import java.io.PrintWriter;
 

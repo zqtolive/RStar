@@ -15,6 +15,9 @@
  */
 package com.rstar.libariescore.content;
 
+import android.content.Context;
+import android.os.Looper;
+
 /**
  * @Package: com.rstar.libariescore.content
  * @ClassName: BaseContext
@@ -43,5 +46,20 @@ public class BaseContext implements IContext {
 
     protected AriesContext getAriesContext() {
         return mAriesContext;
+    }
+
+    @Override
+    public Context getContext() {
+        return mAriesContext.getContext();
+    }
+
+    @Override
+    public ISystemService getSystemService(String serviceName) {
+        return mAriesContext.getSystemService(serviceName);
+    }
+
+    @Override
+    public Looper getLooper(String looperName) {
+        return mAriesContext.getLooper(looperName);
     }
 }

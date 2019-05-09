@@ -28,7 +28,28 @@ package com.rstar.libariescore.section;
  * @Version: 1.0
  */
 public interface SectionConst {
-    public enum SectionState {
+    enum LaunchMode {
+        /**
+         * A new section will be create while start section.
+         */
+        standard,
+        /*
+        While start section, the top of stack will be checked. If the top is same with starting
+        section, it will be reused, otherwise a new section will be created.
+         */
+        singleTop,
+        /*
+        If there is the starting section in stack, all sections will be destroyed that are
+        in front of it.
+         */
+        singleClear,
+        /*
+        If there is the starting section in stack, it will be brought to front.
+         */
+        singleInstance
+    }
+
+    enum SectionState {
 
     }
 }

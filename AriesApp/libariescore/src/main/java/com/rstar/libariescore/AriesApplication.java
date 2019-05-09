@@ -42,18 +42,31 @@ public class AriesApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        mAriesContext = new AriesContext();
         PackageManager pm = getPackageManager();
         ApplicationInfo info;
         try {
             info = pm.getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle metaData = info.metaData;
+            UserServiceCreator creator = parserCreator(metaData);
+            mAriesContext = new AriesContext(getBaseContext());
             if (metaData != null) {
                 parserMetaData(metaData);
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private UserServiceCreator parserCreator(Bundle metaData) {
+        UserServiceCreator creator = null;
+        if (metaData != null) {
+            String value = metaData.getString(AriesCoreConst.NAME_METADATA_USER_SERVICE_CREATOR);
+            if (!TextUtils.isEmpty(value)) {
+                creator = RefactorUtil.createInstanceWithoutParam(value
+                        , UserServiceCreator.class);
+            }
+        }
+        return creator;
     }
 
     private void parserMetaData(Bundle metaData) {

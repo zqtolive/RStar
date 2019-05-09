@@ -15,7 +15,6 @@
  */
 package com.rstar.libariescore.section;
 
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 
 /**
@@ -31,17 +30,20 @@ import android.support.annotation.NonNull;
  * @Version: 1.0
  */
 class SectionInfo {
-    @LayoutRes
-    private int mLayoutId;
+    private String mPath;
+    private Class<BaseSection> mClass;
+    private SectionConst.LaunchMode mLaunchMode;
+    private boolean mIsFloat;
+    private boolean mHideIndicator;
+    private boolean mShowPreable;
+    private int mX;
+    private int mY;
+    private int mWidth ;
+    private int mHeight;
 
     SectionInfo(@NonNull SectionDes sectionDes, FloatSectionDes floatSectionDes) {
-        mLayoutId = sectionDes.layoutId();
         if (floatSectionDes != null) {
 
         }
-    }
-
-    int getLayoutId() {
-        return mLayoutId;
     }
 }

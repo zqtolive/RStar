@@ -13,36 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rstar.rstarcore.debug;
-
-import java.io.PrintWriter;
+package com.rstar.libariescore.task;
 
 /**
- * @Package: com.rstar.rstarcore.debug
- * @ClassName: Testable
+ * @Package: com.rstar.libariescore.task
+ * @ClassName: TaskInfo
  * @Description:
  * @Author: 庆涛
  * @Email: zqt_olive@sina.com
- * @CreateDate: 2019/4/12 11:22
+ * @CreateDate: 2019/5/8 9:57
  * @UpdateUser:
- * @UpdateDate: 2019/4/12 11:22
+ * @UpdateDate: 2019/5/8 9:57
  * @UpdateRemark:
  * @Version: 1.0
  */
-public interface Testable {
-    /**
-     * Output some test result into special file. The information could help us to debug.
-     *
-     * @param pw   Use it to output test result.
-     * @param args Test case input parameters.
-     */
-    void test(PrintWriter pw, String[] args);
-
-    /**
-     * Get the service function's testDescription. Let's know how to use test , the module's
-     * function and what can output.
-     *
-     * @return Description string.
-     */
-    String testDescription();
+class TaskInfo {
+    String mTaskName;
+    Class<BaseTask> mTaskClass;
+    String mPath;
+    String mBindingRouter;
+    TaskConst.TaskMode mMode;
+    int mPriority;
 }

@@ -21,7 +21,7 @@ import android.os.RemoteException;
 
 import com.rstar.libappclient.AppClientConst;
 import com.rstar.libappclient.IRStarClientController;
-import com.rstar.rstarcore.debug.Dumpable;
+import com.rstar.libappclient.debug.Dumpable;
 import com.rstar.rstarcore.RStarCoreConst;
 
 import java.io.PrintWriter;

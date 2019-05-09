@@ -15,6 +15,9 @@
  */
 package com.rstar.libariescore.content;
 
+import android.content.Context;
+import android.os.Looper;
+
 /**
  * @Package: com.rstar.libariescore.content
  * @ClassName: IContext
@@ -28,4 +31,9 @@ package com.rstar.libariescore.content;
  * @Version: 1.0
  */
 public interface IContext {
+    Context getContext();
+
+    ISystemService getSystemService(String serviceName);
+
+    Looper getLooper(String looperName);
 }

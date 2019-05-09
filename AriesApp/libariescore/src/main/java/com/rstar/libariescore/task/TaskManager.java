@@ -17,6 +17,9 @@ package com.rstar.libariescore.task;
 
 import android.os.HandlerThread;
 
+import com.rstar.libariescore.content.AriesContext;
+import com.rstar.libariescore.content.IContext;
+
 /**
  * @Package: com.rstar.libariescore.task
  * @ClassName: TaskManager
@@ -30,11 +33,13 @@ import android.os.HandlerThread;
  * @Version: 1.0
  */
 public class TaskManager {
+    private IContext mAriesContext;
     private TaskRunHandler mRunHandler;
 
-    public TaskManager(){
-        HandlerThread runThread = new HandlerThread(TaskConst.NAME_TASK_RUN_THREAD);
-        mRunHandler = new TaskRunHandler(runThread.getLooper());
-        runThread.start();
+    public TaskManager(AriesContext ariesContext) {
+        mAriesContext = ariesContext;
+//        HandlerThread runThread = new HandlerThread(TaskConst.NAME_TASK_RUN_LOOPER);
+//        mRunHandler = new TaskRunHandler(runThread.getLooper());
+//        runThread.start();
     }
 }

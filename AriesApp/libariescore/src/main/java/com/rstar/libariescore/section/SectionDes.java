@@ -1,6 +1,11 @@
 package com.rstar.libariescore.section;
 
+import android.support.annotation.AnimatorRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.TransitionRes;
+
+import com.rstar.libariescore.AriesCoreConst;
+import com.rstar.libariescore.R;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -25,5 +30,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target(TYPE)
 public @interface SectionDes {
-    @LayoutRes int layoutId();
+    String path();
+
+    SectionConst.LaunchMode launchMode() default SectionConst.LaunchMode.singleInstance;
+
+    boolean hideIndicator() default false;
+
+    boolean showPreable() default false;
 }

@@ -15,16 +15,15 @@
  */
 package com.rstar.libariescore.section;
 
+import android.animation.Animator;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.rstar.libariescore.content.IContext;
 
 /**
  * @Package: com.rstar.libariescore.section
@@ -38,65 +37,77 @@ import com.rstar.libariescore.content.IContext;
  * @UpdateRemark:
  * @Version: 1.0
  */
-public abstract class ContainerFragment extends Fragment implements SectionLifecycle, IContext {
-    private SectionContext mSectionContext;
-    private SectionConst.SectionState mState;
-    private SectionInfo mInfo;
+public class ContainerFragment extends Fragment {
     private SectionManager mManager;
+    private BaseSection mBindingSection;
+
+    final void onAttachSection(BaseSection bindingSection, SectionManager manager) {
+        mBindingSection = bindingSection;
+        mManager = manager;
+    }
 
     @Override
     public final void onAttach(Context context) {
         super.onAttach(context);
+        mBindingSection.onAttach(context);
     }
 
     @Override
     public final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mBindingSection.onSectionCreate(savedInstanceState);
     }
 
     @Nullable
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(mBindingSection.onSectionCreateView(), container);
     }
 
     @Override
     public final void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        mBindingSection.onSectionViewCreated(view, savedInstanceState);
     }
 
     @Override
     public final void onStart() {
         super.onStart();
+        mBindingSection.onSectionStart();
     }
 
     @Override
     public final void onResume() {
         super.onResume();
+        //todo
     }
 
     @Override
     public final void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        //todo
     }
 
     @Override
     public final void onPause() {
         super.onPause();
+        //todo
     }
 
     @Override
     public final void onStop() {
+        mBindingSection.onSectionStop();
         super.onStop();
     }
 
     @Override
     public final void onDestroyView() {
+        mBindingSection.onSectionViewDestroyed();
         super.onDestroyView();
     }
 
     @Override
     public final void onDestroy() {
+        mBindingSection.onSectionDestroy();
         super.onDestroy();
     }
 
@@ -105,40 +116,31 @@ public abstract class ContainerFragment extends Fragment implements SectionLifec
         super.onDetach();
     }
 
-    protected final SectionContext getSectionContext() {
-        return mSectionContext;
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mBindingSection.onConfigurationChanged(newConfig);
     }
 
-    /**
-     * Get the section's state.
-     *
-     * @return The section's state.
-     */
-    protected final SectionConst.SectionState getState() {
-        return mState;
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        mBindingSection.onTrimMemory(level);
     }
 
-    /**
-     * While section need send some information for recovery section, the information
-     * can store in the bundle.
-     *
-     * @param saveInstance It saves the information and sends them to pre section.
-     */
-    protected void onSaveResult(Bundle saveInstance) {
-
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mBindingSection.onLowMemory();
     }
 
-    /**
-     * While the section restore, it may be dependent on pre fragment's result. The result can
-     * be got from the saveInstance.
-     *
-     * @param saveInstance Saving pre fragment's result.
-     */
-    protected void onRestoreWithResult(@NonNull Bundle saveInstance) {
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        mBindingSection.onSaveInstanceState(outState);
     }
 
-    SectionInfo getInfo() {
-        return mInfo;
+    @Override
+    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
+        return super.onCreateAnimator(transit, enter, nextAnim);
     }
 }

@@ -1,1 +1,1 @@
-include ':app', ':libariescore', ':libplayer'
+include ':app', ':libariescore', ':libplayer', ':ariesmvp_gradle_plugin', ':LibAriesCompiler'

@@ -15,6 +15,8 @@
  */
 package com.rstar.libariescore.task;
 
+import android.os.Bundle;
+
 /**
  * @Package: com.rstar.libariescore.task
  * @ClassName: CommandListener
@@ -28,5 +30,5 @@ package com.rstar.libariescore.task;
  * @Version: 1.0
  */
 interface CommandListener {
-    boolean onNewCommand(String intent);
+    boolean onNewCommand(String action, String commandText, int commandCode, Bundle param);
 }

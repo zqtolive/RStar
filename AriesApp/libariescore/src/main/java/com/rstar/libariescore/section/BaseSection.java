@@ -16,11 +16,9 @@
 package com.rstar.libariescore.section;
 
 import android.content.ComponentCallbacks2;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
-
-import com.rstar.libariescore.content.AriesContext;
-import com.rstar.libariescore.content.IContext;
 
 /**
  * @Package: com.rstar.libariescore.section
@@ -36,15 +34,20 @@ import com.rstar.libariescore.content.IContext;
  * @Version: 1.0
  */
 public abstract class BaseSection extends SectionContext implements SectionLifecycle, ComponentCallbacks2 {
+    private SectionInfo mInfo;
     private SectionConst.SectionState mState;
+    private Context mContext;
 
     public BaseSection() {
         super(null);
     }
 
+    void onAttach(Context context) {
+        mContext = context;
+    }
+
     @Override
     public void onConfigurationChanged(Configuration configuration) {
-
     }
 
     @Override
@@ -54,6 +57,10 @@ public abstract class BaseSection extends SectionContext implements SectionLifec
 
     @Override
     public void onLowMemory() {
+
+    }
+
+    protected void onSaveInstanceState(Bundle outState) {
 
     }
 
@@ -76,7 +83,7 @@ public abstract class BaseSection extends SectionContext implements SectionLifec
      *
      * @return The section's state.
      */
-    protected SectionConst.SectionState getState() {
+    protected final SectionConst.SectionState getState() {
         return mState;
     }
 

@@ -28,6 +28,11 @@ package com.rstar.libariescore.task;
  * @Version: 1.0
  */
 interface TaskConst {
-    String NAME_TASK_RUN_THREAD = "aries_task";
     int MSG_START_INIT = 0;
+
+    int PRIORITY_DEFAULT = 10;
+
+    enum TaskMode {
+        singleInstance, singleTask, singleTop
+    };
 }
